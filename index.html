@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Pomodoro Timer</title>
+
+<style>
+
+body{
+background:black;
+font-family:Arial;
+text-align:center;
+margin-top:100px;
+color:white;
+}
+
+#mode{
+font-size:35px;
+margin-bottom:10px;
+}
+
+#timer{
+font-size:90px;
+font-weight:bold;
+}
+
+#session{
+font-size:25px;
+margin-top:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="mode">STUDY</div>
+<div id="timer">25:00</div>
+<div id="session">Session: 1</div>
+
+<audio id="bell" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>
+
+<script>
+
+let work = 1500
+let breaktime = 300
+
+let time = work
+let mode = "work"
+let session = 1
+
+function playSound(){
+document.getElementById("bell").play()
+}
+
+function update(){
+
+let m = Math.floor(time/60)
+let s = time%60
+
+document.getElementById("timer").innerHTML =
+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")
+
+time--
+
+if(time < 0){
+
+playSound()
+
+if(mode === "work"){
+
+mode = "break"
+time = breaktime
+document.getElementById("mode").innerHTML = "BREAK"
+
+}else{
+
+mode = "work"
+time = work
+session++
+
+document.getElementById("mode").innerHTML = "STUDY"
+document.getElementById("session").innerHTML = "Session: " + session
+
+}
+
+}
+
+}
+
+setInterval(update,1000)
+
+</script>
+
+</body>
+</html>
